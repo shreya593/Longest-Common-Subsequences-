@@ -1,1 +1,1 @@
-# Longest-Common-Subsequences-
+# Longest-Palindromic-Subsequences-
