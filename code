@@ -1,43 +1,30 @@
+//https://leetcode.com/problems/longest-palindromic-subsequence/
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-
-        vector<int>v,nums1,v1;
-        int i,w;
-        for(i=0; i<nums.size(); i++){
-            nums1.push_back(nums[i]);
+     int dp[1002][1002];
+    int longestCommonSubsequence(string text1, string text2) {
+        int n =text1.length();
+        int m = text2.length();
+        memset(dp,-1,sizeof(dp));
+        return dpsol(text1,text2,n,m);
+    }
+    int dpsol(string &s1,string &s2,int n,int m){
+        if(n==0 || m==0){
+            return 0;
         }
-        sort(nums1.begin(),nums1.end());
-        int j=nums1.size()-1;
-        i=0;
-            while(i<j){
-               cout<<nums1[i]<<" "<<nums1[j]<<endl;
-            if(nums1[i]+nums1[j]==target){
-                v.push_back(nums1[i]);
-                v.push_back(nums1[j]);
-                break;
-            }
-            else if(nums1[i]+nums1[j]<target){
-            i++;
-            }
-            else if(nums1[i]+nums1[j]>target){
-            j--;
-            }
+        if(dp[n][m]!=-1){
+            return dp[n][m];
         }
-        cout<<v[0]<<v[1];
-        for(i=0; i<nums.size(); i++){
-            if(v[0]==nums[i]){
-                v1.push_back(i);
-                w = i;
-                break;
-            }
+        if(s1[n-1] == s2[m-1]){
+            return dp[n][m] = 1+ dpsol(s1,s2,n-1,m-1);
         }
-        for(i=0; i<nums.size(); i++){
-            if(i!=w && v[1]==nums[i]){
-                v1.push_back(i);
-                break;
-            }
-        }
-        return v1;
+        
+        return dp[n][m] = max(dpsol(s1,s2,n,m-1),dpsol(s1,s2,n-1,m));
+        
+    }
+    int longestPalindromeSubseq(string s) {
+        string s2 =s;
+        reverse(s2.begin(),s2.end());
+        return longestCommonSubsequence(s,s2);
     }
 };
